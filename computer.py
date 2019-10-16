@@ -15,6 +15,15 @@ def change_sign(eqn) :
     print(search)
     search_neg = [str(float(i[0].replace(" ", "")) * -1) for i in search]
     print(search_neg)
+    j = 0
+    rhs = ""
+    for i in search_neg :
+        i = i.replace(".0", "")
+        i = i.replace("", " ")
+        add = i + " * X^" + str(j)
+        rhs = rhs + " " + add
+        j += 1
+        print(rhs)
     return search_neg
 
 if len(sys.argv) == 2 :
