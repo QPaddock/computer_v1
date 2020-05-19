@@ -7,12 +7,15 @@ def check_power(eqn) :
     ans = re.findall("X\^([3-9]\d?|\d+\d)", eqn)
     if len(ans) != 0 :
         return ans[0]
-    ans = re.findall("X\^([1-2])", eqn)
+    ans = re.findall("X\^([1-3])", eqn)
+    ans.sort()
     if len(ans) != 0 :
-        return ans[len(ans)-1]
+        return ans[len(ans) - 1]
     ans = re.findall("X\^([0])", eqn)
+    ans.sort()
     if len(ans) != 0 :
-        return ans[len(ans)-1]
+        return ans[len(ans) - 1]
+    return len(ans)
 
 def simplify(eqn) :
     i = 0
@@ -62,6 +65,7 @@ def highest_power(eqn) :
         i = i.replace(" ", "")
         if high < float(i) :
             high = float(i)
+    print(high)
     return(high)
 
 
@@ -70,7 +74,11 @@ def solve(eqn) :
     if power == 0:
         search = re.findall("((?:\+|\-)?(?: )?(\d?|\d+?.?\d+?))(?: \* X\^\d)", eqn)
         c = float(search[0][0].replace(" ", ""))
-        print("The solution is: \n" + str(c * -1))
+        if c == 0 :
+            print ("The Solution is all real numbers")
+        else :
+            print("No real solution")
+        # print("The solution is: \n" + str(c * -1))
     if power == 1:
         search = re.findall("((?:\+|\-)?(?: )?(\d?|\d+?.?\d+?))(?: \* X\^\d)", eqn)
         c = float(search[0][0].replace(" ", ""))
@@ -87,7 +95,11 @@ def solve(eqn) :
             return(0)
         print("a = " + str(a) + " b = " + str(b) + " c = " + str(c))
         if (b**2 - (4*a*c)) < 0 :
-            print("Can't solve!")
+            print("Discriminant is strictly negative, the two solutions are:")
+            solution = (-b - (b**2 - (4*a*c))**0.5)/(2 * a)
+            print(str(solution))
+            solution = (-b + (b**2 - (4*a*c))**0.5)/(2 * a)
+            print(str(solution))
             return(0)
         print("Discriminant is strictly positive, the two solutions are:")
         solution = (-b - (b**2 - (4*a*c))**0.5)/(2 * a)
@@ -116,4 +128,4 @@ if len(sys.argv) == 2 :
         ans = solve(equation)
 
 else :
-    print("No Arguments!")  
+    print("No Arguments!")
